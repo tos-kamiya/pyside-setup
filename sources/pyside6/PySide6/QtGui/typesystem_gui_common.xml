@@ -711,8 +711,12 @@
 
     <modify-function signature="load(const QString&amp;, const char*)" allow-thread="yes"/>
     <modify-function signature="load(QIODevice*,const char*)" allow-thread="yes"/>
-    <modify-function signature="save(const QString&amp;,const char*,int)const" allow-thread="yes"/>
-    <modify-function signature="save(QIODevice*,const char*,int)const" allow-thread="yes"/>
+    <modify-function signature="save(const QString&amp;,const char*,int)const" allow-thread="yes">
+        <modify-argument index="2" pyi-type="Optional[str]"/>
+    </modify-function>
+    <modify-function signature="save(QIODevice*,const char*,int)const" allow-thread="yes">
+        <modify-argument index="2" pyi-type="Optional[str]"/>
+    </modify-function>
     <modify-function signature="QImage(uchar*,int,int,qsizetype,QImage::Format,QImageCleanupFunction,void*)">
         <modify-argument index="1">
             <replace-type modified-type="PyBuffer"/>

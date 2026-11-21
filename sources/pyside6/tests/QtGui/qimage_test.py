@@ -13,6 +13,7 @@ sys.path.append(os.fspath(Path(__file__).resolve().parents[1]))
 from init_paths import init_test_paths
 init_test_paths(False)
 
+from PySide6.QtCore import QBuffer, QIODevice
 from PySide6.QtGui import QImage
 from helper.usesqapplication import UsesQApplication
 from xpm_data import xpm
@@ -20,6 +21,16 @@ from xpm_data import xpm
 
 class QImageTest(UsesQApplication):
     '''Test case for calling setPixel with float as argument'''
+
+    def testSaveFormatString(self):
+        img = QImage(1, 1, QImage.Format.Format_RGB32)
+        buffer = QBuffer()
+        self.assertTrue(buffer.open(QIODevice.OpenModeFlag.WriteOnly))
+        self.assertTrue(img.save(buffer, "PNG"))
+        self.assertGreater(buffer.size(), 0)
+
+        with self.assertRaises((TypeError, ValueError)):
+            img.save(buffer, b"PNG")
 
     def testQImageStringBuffer(self):
         '''Test if the QImage signatures receiving string buffers exist.'''
